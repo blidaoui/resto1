@@ -4,29 +4,44 @@ import { Button } from "react-bootstrap";
 
 interface Product {
   id: string;
-  name: string;
+  title: string;
+  price: {
+    priceHT: string;
+  };
+  imageUrl: {
+    Default: {
+      urlDefault: string;
+    };
+  };
   // autres propriétés
 }
 
 interface ProduitListProps {
-    product: Product[];
+  product: Product[];
 
   categoryId: string | null;
   setShowItemListe: (show: boolean) => void;
 }
 
-const ProduitList: React.FC<ProduitListProps> = ({  product ,categoryId, setShowItemListe }) => {
+const ProduitList: React.FC<ProduitListProps> = ({
+  product,
+  categoryId,
+  setShowItemListe,
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-   const productId=localStorage.getItem("productId")
+    const productId = localStorage.getItem("productId");
     const fetchProducts = async () => {
       if (categoryId) {
         try {
-          const response = await fetch(`http://localhost:8000/backend/restaurant/${productId}/${categoryId}/products`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
+          const response = await fetch(
+            `http://localhost:8000/backend/restaurant/${productId}/${categoryId}/product`,
+            {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
           if (response.ok) {
             const data = await response.json();
             setProducts(data);
@@ -45,12 +60,47 @@ const ProduitList: React.FC<ProduitListProps> = ({  product ,categoryId, setShow
   return (
     <div>
       <h2>Liste des Produits</h2>
-      <Button onClick={() => setShowItemListe(false)}>Retour aux catégories</Button>
-      <ul>
-        {products.map(product => (
-          <li key={product.id}>{product.name}</li>
-        ))}
-      </ul>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Image</th>
+            <th>Prix</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product.id}>
+              <td>
+                <h5>{product?.title}</h5>
+              </td>
+              <td>
+                <img
+                  style={{ width: "10%" }}
+                  src={product.imageUrl.Default.urlDefault}
+                  alt={product.title}
+                />
+              </td>
+              <td>
+                <h5>{product.price.priceHT}</h5>
+              </td>
+              <td>
+                <Button>Modifier</Button>
+              </td>
+              <td>
+                <Button>supprimer</Button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <Button onClick={() => setShowItemListe(false)}>
+        Retour aux catégories
+      </Button>
+      <Button>Ajouter produit</Button>
     </div>
   );
 };
