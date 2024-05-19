@@ -57,7 +57,5 @@ saveItems(items: any): Promise<Product> {
 }
 
 
-// async findCategoriesByProductId(id:number): Promise<Product[]> {
-//   return await this.productRepository.find(id);
-// }
+
 }

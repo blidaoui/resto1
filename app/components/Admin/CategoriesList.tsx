@@ -106,6 +106,9 @@ const CategoriesList: React.FC<ProductListProps> = ({ product, setShowCatList, o
   const handleShowProducts = (categoryId: string) => {
     setSelectedCategoryId(categoryId);
     setShowItemListe(true);
+    localStorage.setItem("categorieID", (categoryId));
+
+
   };
 
   return (
