@@ -93,7 +93,7 @@ function CardBoutique() {
             >
               <div
                 className="box"
-                onClick={() => navigateToOtherPage(item?.resto.shopid)}
+                onClick={() =>{localStorage.setItem("idOfShop",item.id); navigateToOtherPage(item?.resto.shopid)}}
               >
                 <div
                   className="img-box"

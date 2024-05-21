@@ -26,8 +26,9 @@ const ProductList: React.FC<ProductListProps> = (props) => {
   const [categoriesUpdated, setCategoriesUpdated] = useState<boolean>(false); // New state
   const [product, setProduct] = useState<Product[]>([]);
   const [showcatList, setShowCatList] = useState(false);
+  const [selectedResto, setSelectedResto] = useState({});
 
-  const handleCategoriesUpdate = () => {
+  const handleCategoriesUpdate:any = () => {
     setCategoriesUpdated((prev) => !prev);
   };
 
@@ -80,7 +81,9 @@ const ProductList: React.FC<ProductListProps> = (props) => {
     setShowModal(true);
   };
   
-  const handleClickUpdate = () => {
+  const handleClickUpdate = (value: any) => {
+    setSelectedResto(value)
+    localStorage.setItem("productId", JSON.stringify(value.id)); // Set productId to localStorage
     setShowModalUpdate(true);
   };
 
@@ -105,7 +108,7 @@ const ProductList: React.FC<ProductListProps> = (props) => {
                   <td>{value.resto.Company}</td>
                   <td>{value.resto.shopid}</td>
                   <td>
-                    <Button onClick={handleClickUpdate}>
+                    <Button onClick={() => handleClickUpdate(value)}>
                       modifier
                       <GrUpdate />
                     </Button>
@@ -130,8 +133,9 @@ const ProductList: React.FC<ProductListProps> = (props) => {
               <UpdateRestaurant
                 showModalUpdate={showModalUpdate}
                 setShowModalUpdate={setShowModalUpdate}
-                setUpdateResto={setUpdateResto}
-                UpdateResto={UpdateResto}
+                setUpdate={setUpdate}
+                update={update}
+                selectedResto={selectedResto}
               />
             )}
             {showModal && (

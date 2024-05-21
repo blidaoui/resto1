@@ -9,9 +9,9 @@ import { RiMapPin2Fill } from "react-icons/ri";
 
 
 function Hero2() {
-  const cat: any = localStorage.getItem("resto");
+  // const cat: any = localStorage.getItem("resto");
 
-  let resto = JSON.parse(cat || null);
+  // let resto:any = JSON.parse(cat || null);
 
  
   return (
@@ -25,7 +25,7 @@ function Hero2() {
           </div>
         </header>
 
-        <section className="slider_section">
+        {/* <section className="slider_section">
           <div className="container">
             <div className="row">
               <div className="col-lg-10 mx-auto">
@@ -77,7 +77,7 @@ function Hero2() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
 
       </div>

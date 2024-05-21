@@ -181,7 +181,6 @@ export class ProductController {
     @Param('id') id: number,
     @Param('idCategorie') idCategorie: string,
     @Body('card') card: any,
-   
   ): Promise<Product> {
     const Product: any = await this.ProductService.findOneProduct({
       where: { id },
@@ -201,11 +200,12 @@ export class ProductController {
     console.log('cc', Product.card.categories[idCategorie]);
 
     return this.ProductService.saveItems(Product);
-  } @Delete('deleteItem/:id/:idCategorie/:itemId')
+  }
+  @Delete('deleteItem/:id/:idCategorie/:itemId')
   async deleteItem(
     @Param('id') id: number,
     @Param('idCategorie') idCategorie: string,
-    @Param('itemId') itemId: string
+    @Param('itemId') itemId: string,
   ): Promise<Product> {
     const Product: any = await this.ProductService.findOneProduct({
       where: { id },
@@ -233,5 +233,30 @@ export class ProductController {
     console.log('Updated category:', Product.card.categories[idCategorie]);
 
     return this.ProductService.saveItems(Product);
+  }
+  @Get('getItem/:id/:idCategorie/:itemId')
+  async getItem(
+    @Param('id') id: number,
+    @Param('idCategorie') idCategorie: string,
+    @Param('itemId') itemId: string,
+  ): Promise<any> {
+    const product: any = await this.ProductService.findOneProduct({
+      where: { id },
+    });
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    const category = product.card.categories[idCategorie];
+    if (!category) {
+      throw new Error('Category not found');
+    }
+
+    const item = category.items.find(item => item === itemId);
+    if (!item) {
+      throw new Error('Item not found');
+    }
+
+    return { item, details: product.card.items[itemId] };
   }
 }

@@ -7,7 +7,7 @@ import { useSnapshot } from "valtio";
 function ModalItem({ modal, setModal, Item }: any) {
   const { Panier } = useSnapshot(store);
   const toggle = () => setModal(!modal);
-  const [Somme, SetSomme] = React.useState(Item.price.priceHT ?? 0);
+  const [Somme, SetSomme] = React.useState(Number(Item.price.priceHT) ?? 0);
   console.log({ Item });
 
   const imageUrl =

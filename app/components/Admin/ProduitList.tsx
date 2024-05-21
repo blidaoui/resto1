@@ -94,12 +94,10 @@ const ProduitList: React.FC<ProduitListProps> = ({
     const productId = localStorage.getItem("productId")
       ? parseInt(localStorage.getItem("productId") as string, 10)
       : null;
-
     if (!productId) {
       alert("No product found");
       return;
     }
-
     await deleteItem(productId, categoryId, itemId);
   };
 
