@@ -12,7 +12,7 @@ type AddCategorieType = {
   update: boolean
 }
 
-export default function AddCategorie({ showModal, setShowModal, setUpdate, update }: AddCategorieType) {
+export default function AjouterCategorie({ showModal, setShowModal, setUpdate, update }: AddCategorieType) {
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
 
@@ -68,6 +68,7 @@ export default function AddCategorie({ showModal, setShowModal, setUpdate, updat
       <Modal.Body>
         <form className="form_main" onSubmit={handleSubmit}>
           <div className="inputContainer">
+          <label>Image</label>
             <input
               id="image"
               className="inputField"

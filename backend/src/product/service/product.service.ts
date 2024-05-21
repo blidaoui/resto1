@@ -47,14 +47,21 @@ async save(product: Product): Promise<Product> {
 async updateProduct(id: string): Promise<void> {
   await this.productRepository.delete(id);
 }
+async updateProduct1(product: Product): Promise<Product> {
+  return await this.productRepository.save(product);
+}
+
 
 async deleteItem(id: any): Promise<void> {
   await this.productRepository.delete(id);
 }
 
-saveItems(items: any): Promise<Product> {
-  return this.productRepository.save(items);
+async saveItems(product: Product): Promise<Product> {
+  // Ici, on pourrait avoir des logiques spécifiques pour la gestion des items.
+  return await this.productRepository.save(product);
 }
+
+
 
 
 

@@ -5,8 +5,9 @@ import { MdDelete } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
 import { IoMdAdd } from "react-icons/io";
 import CategoriesList from "./CategoriesList";
-import Addresto from "@/app/Page/product/addResto/addresto";
-import UpdateRestaurant from "@/app/Page/product/updateResto/UpdateResto";
+import AjouterRestaurant from "@/app/Page/product/AjouterRestaurant/AjouterRestaurant";
+import ModifierRestaurant from "@/app/Page/product/ModifierRestaurant/ModifierRestaurant";
+
 
 interface Product {
   id: number;
@@ -92,6 +93,9 @@ const ProductList: React.FC<ProductListProps> = (props) => {
       {!showcatList ? (
         <div>
           <h2> Liste des Restaurants </h2>
+          <Button onClick={handleClick} style={{float:"right"}}>
+              <IoMdAdd /> 
+            </Button>
           <table className="table">
             <thead>
               <tr>
@@ -99,7 +103,7 @@ const ProductList: React.FC<ProductListProps> = (props) => {
                 <th>Shop ID</th>
                 <th>Modifier</th>
                 <th>Supprimer</th>
-                <th>Categories</th>
+                <th>liste</th>
               </tr>
             </thead>
             <tbody>
@@ -109,7 +113,6 @@ const ProductList: React.FC<ProductListProps> = (props) => {
                   <td>{value.resto.shopid}</td>
                   <td>
                     <Button onClick={() => handleClickUpdate(value)}>
-                      modifier
                       <GrUpdate />
                     </Button>
                   </td>
@@ -120,17 +123,15 @@ const ProductList: React.FC<ProductListProps> = (props) => {
                   </td>
                   <td>
                     <Button onClick={() => handlesubmit(value)}>
-                      List des Categories
+                      Categories
                     </Button>
                   </td>
                 </tr>
               ))}
             </tbody>
-            <Button onClick={handleClick}>
-              <IoMdAdd /> Ajouter restaurant
-            </Button>
+            
             {showModalUpdate && (
-              <UpdateRestaurant
+              <ModifierRestaurant
                 showModalUpdate={showModalUpdate}
                 setShowModalUpdate={setShowModalUpdate}
                 setUpdate={setUpdate}
@@ -139,7 +140,7 @@ const ProductList: React.FC<ProductListProps> = (props) => {
               />
             )}
             {showModal && (
-              <Addresto
+              <AjouterRestaurant
                 showModal={showModal}
                 setShowModal={setShowModal}
                 setUpdate={setUpdate}

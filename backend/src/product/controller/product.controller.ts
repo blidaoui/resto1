@@ -201,6 +201,7 @@ export class ProductController {
 
     return this.ProductService.saveItems(Product);
   }
+  /// Delete items
   @Delete('deleteItem/:id/:idCategorie/:itemId')
   async deleteItem(
     @Param('id') id: number,
@@ -234,6 +235,7 @@ export class ProductController {
 
     return this.ProductService.saveItems(Product);
   }
+  /// get items
   @Get('getItem/:id/:idCategorie/:itemId')
   async getItem(
     @Param('id') id: number,
@@ -259,4 +261,47 @@ export class ProductController {
 
     return { item, details: product.card.items[itemId] };
   }
+  /// put items
+  @Put('updateItem/:id/:idCategorie/:itemId')
+  async updateItem(
+    @Param('id') id: number,
+    @Param('idCategorie') idCategorie: string,
+    @Param('itemId') itemId: string,
+    @Body('card') updatedCard: any,
+  ): Promise<any> {
+    
+    // Récupération du produit
+    const product: any = await this.ProductService.findOneProduct({
+      where: { id },
+    });
+    
+    if (!product) {
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+    }
+  
+    // Vérifier l'existence de la catégorie
+    const category = product.card.categories[idCategorie];
+    console.log({category});
+    
+    if (!category) {
+      throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+    }
+  // let resto=
+    // Vérifier l'existence de l'item
+    
+    if (!product.card.items[itemId]) {
+      throw new HttpException('Item not found', HttpStatus.NOT_FOUND);
+    }
+  
+    // Mise à jour de l'item
+    product.card.items[itemId] = {...updatedCard
+    };
+  
+    // Sauvegarde des modifications
+    await this.ProductService.saveItems(product);
+  
+    return { message: `Item ${itemId} updated successfully` };
+  }
+  
+
 }

@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import AddCategorie from "@/app/Page/product/addCategorie/AddCategorie";
 import ProduitList from "./ProduitList";
+import { IoMdAdd } from "react-icons/io";
+import { MdDelete } from "react-icons/md";
+import AjouterCategorie from "@/app/Page/product/AjouterCategorie/AjouterCategorie";
 
 interface Category {
   id: string;
@@ -116,13 +118,16 @@ const CategoriesList: React.FC<ProductListProps> = ({ product, setShowCatList, o
       {!showItemListe ? (
         <div>
           <h2>Liste des Categories</h2>
+          <Button onClick={handleAddCategory} style={{float:"right"}}>
+              <IoMdAdd /> 
+            </Button>
           <table className="table">
             <thead>
               <tr>
-                <th>Title</th>
+                <th>Titre</th>
                 <th>Image</th>
-                <th>Actions</th>
-                <th>Liste des produits</th>
+                <th>Supprimer</th>
+                <th>Liste </th>
               </tr>
             </thead>
             <tbody>
@@ -139,24 +144,24 @@ const CategoriesList: React.FC<ProductListProps> = ({ product, setShowCatList, o
                     />
                   </td>
                   <td>
-                    <Button onClick={() => handleDelete(categoryId)}>Delete</Button>
+                    <Button onClick={() => handleDelete(categoryId)}><MdDelete /></Button>
                   </td>
                   <td>
-                    <Button onClick={() => handleShowProducts(categoryId)}>Liste de produits</Button>
+                    <Button onClick={() => handleShowProducts(categoryId)}>produits</Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
 
-          <Button onClick={handleAddCategory}>Ajouter Categories</Button>
+          
           <Button onClick={() => setShowCatList(false)}>Retour</Button>
           {showModal && (
-            <AddCategorie
+            <AjouterCategorie
               showModal={showModal}
               setShowModal={handleCloseModal}
               setUpdate={setUpdate}
-              update={update}
+              update={update} 
             />
           )}
         </div>

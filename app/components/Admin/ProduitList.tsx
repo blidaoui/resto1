@@ -1,5 +1,6 @@
 "use client";
 import AddItem from "@/app/Page/product/addItems/AddItem";
+import EditItem from "@/app/Page/product/updateItem/EditItem";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 
@@ -31,6 +32,7 @@ const ProduitList: React.FC<ProduitListProps> = ({
   const [products, setProducts] = useState<Product[]>([]);
   const [update, setUpdate] = useState<boolean>(false);
   const [showModal, setShowModal] = useState(false);
+  const [editItemId, setEditItemId] = useState<string | null>(null);
 
   useEffect(() => {
     const productId = localStorage.getItem("productId");
@@ -104,6 +106,11 @@ const ProduitList: React.FC<ProduitListProps> = ({
   const handleAddItem = () => {
     setShowModal(true);
   };
+  
+  const handleEditItem = (itemId: string) => {
+    setEditItemId(itemId);
+    setShowModal(true);
+  };
   const handleCloseModal = () => {
     setShowModal(false);
     setUpdate(!update);
@@ -139,7 +146,9 @@ const ProduitList: React.FC<ProduitListProps> = ({
                 <h5>{product.price.priceHT}</h5>
               </td>
               <td>
-                <Button>Modifier</Button>
+              <Button onClick={() => handleEditItem(product.id)}>
+                  Modifier
+                </Button>
               </td>
               <td>
                 <Button
@@ -157,12 +166,22 @@ const ProduitList: React.FC<ProduitListProps> = ({
         Retour aux catégories
       </Button>
       <Button onClick={handleAddItem}>Ajouter produit</Button>
-      {showModal && (
+      {showModal && !editItemId && (
         <AddItem
           showModal={showModal}
           setShowModal={handleCloseModal}
           setUpdate={setUpdate}
           update={update}
+        />
+      )}
+      {showModal && editItemId && (
+        <EditItem
+          showModal={showModal}
+          setShowModal={handleCloseModal}
+          setUpdate={setUpdate}
+          update={update}
+          itemId={editItemId}
+          categoryId={categoryId!}
         />
       )}
     </div>
